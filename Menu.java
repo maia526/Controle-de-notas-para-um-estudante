@@ -64,7 +64,6 @@ public class Menu {
                         System.out.print("\nMatéria excluida com sucesso.\n");
                         admin.calculaCr();
                     }
-
                     else System.out.print("\nHouve um erro na exclusão da matéria no sistema.\n");
                     break;
                 case 3:

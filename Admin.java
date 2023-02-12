@@ -11,51 +11,57 @@ public class Admin {
     public Admin(){
         this.materias = new ArrayList<>();
     }
+    public Materia encotraMateria(String nome){
+        for (Materia materia : materias){
+            if (materia.getNome().equals(nome))
+                return materia;
+        }
+        return null;
+    }
     public boolean adcionarMateria(Materia materia){
         return materias.add(materia);
     }
-    public boolean excluirMateria(String nome){
-        for (Materia materia  : materias){
-            if (materia.getNome().equals(nome))
-                return materias.remove(materia);
-        }
-        return false;
+    public boolean excluirMateria(String nomeMateria){
+        Materia materia = encotraMateria(nomeMateria);
+        if (materia == null)
+            return false;
+        else
+            return materias.remove(materia);
     }
     public boolean incluirNota(double nota, String nomeMateria){
-        for (Materia materia: materias){
-            if (materia.getNome().equals(nomeMateria)){
-                return materia.adcionaNota(nota);
-            }
-        }
-        return false;
+        Materia materia = encotraMateria(nomeMateria);
+        if (materia == null)
+            return false;
+        else
+            return materia.adcionaNota(nota);
     }
-    public boolean recalcularMedia(String materia){
-        for (Materia m : materias){
-            if (m.getNome().equals(materia)){
-                return m.recalcularMedia();
-            }
+    public boolean recalcularMedia(String nomeMateria){
+        Materia materia = encotraMateria(nomeMateria);
+        if (materia == null)
+            return false;
+        else{
+            materia.recalcularMedia();
+            return true;
         }
-        return false;
     }
     public boolean terminaPeriodo(String nomeMateria){
-        for (Materia materia : materias){
-            if (materia.getNome().equals(nomeMateria)) {
-                if (materia.getMedia() >= materia.getMediaMinima())
-                    materia.setPassou(true);
-                return materia.setEncerrada(true);
-            }
+        Materia materia = encotraMateria(nomeMateria);
+        if (materia == null)
+            return false;
+        else{
+            if (materia.getMedia() >= materia.getMediaMinima())
+                materia.setPassou(true);
+            return materia.setEncerrada(true);
         }
-        return false;
     }
-    public boolean calculaCr(){
+    public void calculaCr(){
         double soma = 0;
-        int divisor = 0;
+        double divisor = 0;
         for (Materia materia : materias){
             soma = sum(materia.getMedia() * materia.getPeso(), soma);
-            divisor = (int) sum(materia.getPeso(), divisor);
+            divisor = sum(materia.getPeso(), divisor);
         }
         this.cr = soma/divisor;
-        return true;        //todo: essa função tinha que ser boolean?
     }
     public boolean escreveTxt(){
         try {
@@ -73,3 +79,6 @@ public class Admin {
         return false;
     }
 }
+
+//ideias:
+//todo: fazer o programa ler o arquivo txt e pegar as informações dele toda vez que for rodado (tipo, roda o programa pela segunda vez e ele lê o txt e armazena as informações que estão lá

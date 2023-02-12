@@ -26,9 +26,8 @@ public class Materia {
         }
         return soma;
     }
-    public boolean recalcularMedia(){
+    public void recalcularMedia(){
         media = calculaSomaNotas() / notas.size();
-        return true;    //todo: repensar como fazer esse método (faz sentido ele ser booleano se ele sempre retorna true?)
     }
 
     public double getMediaMinima() {
